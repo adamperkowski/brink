@@ -5,11 +5,12 @@ use std::{thread, time::Duration};
 
 /* help
    
-   next  >  Skip current song.
-   back  >  Play back (standard back action)
-   prv   >  Play previous song (may not work the best)
-   clrs  >  Reload screen (you can also use ↵ ) 
-   plpa  >  Play / pause */
+   next   >  Skip current song.
+   back   >  Play back (standard back action)
+   prv    >  Play previous song (may not work the best)
+   clrs   >  Reload screen (you can also use ↵ ) 
+   plpa   >  Play / pause 
+   status >  Display media status */
 
 fn main() {
     bsh();
@@ -86,6 +87,21 @@ fn main() {
 
             stdout.pop();
             
+            println!("\n  [ * ] {stdout}.\n");
+        }
+        else if inpt == "status" {
+            bsh();
+
+            let state = Command::new("playerctl")
+                .arg("status")
+                .stdout(Stdio::piped())
+                .output()
+                .expect("  [ ! ] Failed to connect!");
+
+            let mut stdout = String::from_utf8(state.stdout).unwrap();
+
+            stdout.pop();
+
             println!("\n  [ * ] {stdout}.\n");
         }
         
