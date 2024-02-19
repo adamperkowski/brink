@@ -18,7 +18,7 @@ fn main() {
 
         inpt.pop();
 
-        if inpt == "skip" {
+        if inpt == "next" {
             Command::new("playerctl")
                 .arg("next")
                 .spawn()
@@ -27,7 +27,36 @@ fn main() {
             thread::sleep(Duration::from_millis(1000));
 
             bsh();
-            println!("\n  [ * ] Song skipped.\n");
+            println!("\n  [ * ] Playing next.\n");
+        }
+        else if inpt == "prv" {
+            Command::new("playerctl")
+                .arg("previous")
+                .spawn()
+                .expect("  [ ! ] Failed to connect!");
+
+            thread::sleep(Duration::from_millis(500));
+
+            Command::new("playerctl")
+                .arg("previous")
+                .spawn()
+                .expect("  [ ! ] Failed to connect!");
+
+            thread::sleep(Duration::from_millis(500));
+
+            bsh();
+            println!("\n  [ * ] Playing previous. (may not work 100%)\n");
+        }
+        else if inpt == "back" {
+            Command::new("playerctl")
+                .arg("previous")
+                .spawn()
+                .expect("  [ ! ] Failed to connect!");
+
+            thread::sleep(Duration::from_millis(1000));
+
+            bsh();
+            println!("\n  [ * ] Playing back.\n");
         }
         else { println!(); }
     }
