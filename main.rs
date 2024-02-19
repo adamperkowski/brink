@@ -1,4 +1,4 @@
-use std::process::Command;
+use std::process::{Command, Stdio};
 use std::io;
 use std::io::Write;
 use std::{thread, time::Duration};
@@ -8,7 +8,8 @@ use std::{thread, time::Duration};
    next  >  Skip current song.
    back  >  Play back (standard back action)
    prv   >  Play previous song (may not work the best)
-   clrs  >  Reload screen (you can also use ↵ ) */
+   clrs  >  Reload screen (you can also use ↵ ) 
+   plpa  >  Play / pause */
 
 fn main() {
     bsh();
@@ -64,6 +65,28 @@ fn main() {
 
             bsh();
             println!("\n  [ * ] Playing back.\n");
+        }
+        else if inpt == "plpa" {
+            Command::new("playerctl")
+                .arg("play-pause")
+                .spawn()
+                .expect("  [ ! ] Failed to connect!");
+
+            thread::sleep(Duration::from_millis(500));
+
+            bsh();
+
+            let state = Command::new("playerctl")
+                .arg("status")
+                .stdout(Stdio::piped())
+                .output()
+                .expect("  [ ! ] Failed to connect!");
+
+            let mut stdout = String::from_utf8(state.stdout).unwrap();
+
+            stdout.pop();
+            
+            println!("\n  [ * ] {stdout}.\n");
         }
         
         else if inpt == "clrs" || inpt == "" {
