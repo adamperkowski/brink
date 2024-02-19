@@ -3,6 +3,13 @@ use std::io;
 use std::io::Write;
 use std::{thread, time::Duration};
 
+/* help
+   
+   next  >  Skip current song.
+   back  >  Play back (standard back action)
+   prv   >  Play previous song (may not work the best)
+   clrs  >  Reload screen (you can also use ↵ ) */
+
 fn main() {
     bsh();
     println!();
@@ -58,6 +65,12 @@ fn main() {
             bsh();
             println!("\n  [ * ] Playing back.\n");
         }
+        
+        else if inpt == "clrs" || inpt == "" {
+            bsh();
+            println!();
+        }
+
         else { println!(); }
     }
     
