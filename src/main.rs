@@ -2,7 +2,6 @@ use std::process::{Command, Stdio};
 use std::io;
 use std::io::Write;
 use std::{thread, time::Duration};
-use async_std::task;
 
 /* help
    
@@ -15,7 +14,6 @@ use async_std::task;
 
 fn main() {
     bsh();
-    refresh();
     println!();
 
     let mut inpt = String::new();
@@ -126,11 +124,6 @@ fn main() {
     
     clrs();
     println!("  [ * ] We will miss you...");
-}
-
-async fn refresh() {
-    task::sleep(Duration::from_millis(10000)).await;
-    print!("end");
 }
 
 fn clrs() {
